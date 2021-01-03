@@ -71,6 +71,12 @@ memory_block = defaultdict(list)
 
 
 def flip_bits(address: str) -> List[int]:
+    """
+    Finds a list of all addresses in an address after it is masked.
+    Returns a list of all addresses in decimal (base 10)
+    :param address: 36-bit memory address. Eg: 0000011011111X1001101X1011X1001111X1 - str
+    :return: List of all addresses in the input address after masking - List[int]
+    """
     all_addresses = []
     masked_address = []
     for bit in address.lstrip("0"):
