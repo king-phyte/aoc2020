@@ -70,7 +70,7 @@ from part_1 import parse_instruction_set, binary_to_decimal
 memory_block = defaultdict(list)
 
 
-def flip_bits(address: str, indices: List[int] = 0) -> List[int]:
+def flip_bits(address: str) -> List[int]:
     all_addresses = []
     masked_address = []
     for bit in address.lstrip("0"):
