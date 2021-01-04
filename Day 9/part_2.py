@@ -43,7 +43,7 @@ def main():
     with open("./input.txt") as f:
         puzzle_input = [int(line.strip()) for line in f.readlines()]
 
-    TARGET = part_1.main()
+    target = part_1.main()
 
     contiguous_set = []
 
@@ -51,7 +51,7 @@ def main():
     for _ in range(1000):
         for i in range(from_line, len(puzzle_input)):
             contiguous_set.append(puzzle_input[i])
-            if sum(contiguous_set) == TARGET:
+            if sum(contiguous_set) == target:
                 return min(contiguous_set), max(contiguous_set)
         from_line += 1
         contiguous_set = []

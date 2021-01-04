@@ -21,7 +21,7 @@ Given the same example list from above:
 How many passwords are valid according to the new interpretation of the policies?
 
 """
-from typing import Union, List
+from typing import Union, Sequence
 
 
 def is_valid(pwd: str, char: Union[str, int], first_position: int, last_position: int) -> bool:
@@ -49,7 +49,7 @@ def is_valid(pwd: str, char: Union[str, int], first_position: int, last_position
         return False
 
 
-def find_number_of_valid_passwords(data: List[str]) -> int:
+def find_number_of_valid_passwords(data: Sequence[str]) -> int:
     """
     Finds the number of valid passwords in the data argument.
     It takes all elements in the data and checks their validity with the is_valid function.

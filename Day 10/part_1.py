@@ -102,11 +102,11 @@ the joltage differences between the charging outlet, the adapters, and your devi
 differences multiplied by the number of 3-jolt differences?
 
 """
-from typing import List
+from typing import List, Sequence
 from collections import Counter
 
 
-def calculate_differences(data: List[int]) -> List[int]:
+def calculate_differences(data: Sequence[int]) -> List[int]:
     return [data[i] - data[i - 1] for i in range(1, len(data))]
 
 

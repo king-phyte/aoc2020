@@ -61,7 +61,7 @@ Execute the initialization program. What is the sum of all values left in memory
 
 """
 from collections import defaultdict
-from typing import List
+from typing import List, Sequence
 
 memory_block = defaultdict(int)
 
@@ -71,7 +71,7 @@ def binary_to_decimal(binary: str) -> int:
     return int("0b" + binary, base=2)
 
 
-def execute_instruction(instruction_set: List[str]) -> None:
+def execute_instruction(instruction_set: Sequence[str]) -> None:
     """
     Writes values into the memory block
     """
@@ -99,7 +99,7 @@ def execute_instruction(instruction_set: List[str]) -> None:
         memory_block[memory_address[3:]] = decimal
 
 
-def parse_instruction_set(data: List[str]) -> List[List[str]]:
+def parse_instruction_set(data: Sequence[str]) -> List[List[str]]:
     """
     Groups masks and related memory instructions for convenience of further processing
     :param data: Puzzle input - List[str]

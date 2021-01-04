@@ -57,7 +57,6 @@ def can_contain_a_desired_bag(line: str, desired_bag: str = "shiny gold") -> boo
 
 def main():
     with open("./input.txt") as f:
-
         puzzle_input = [line.strip() for line in f.readlines()]
 
     bags_which_can_contain_shiny_gold_bags = []

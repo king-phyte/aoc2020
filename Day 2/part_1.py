@@ -29,17 +29,17 @@ they contain one a or nine c, both within the limits of their respective policie
 How many passwords are valid according to their policies?
 
 """
-from typing import AnyStr, Union
+from typing import Union, Sequence
 
 
-def is_valid(pwd: AnyStr, char: Union[str, int], minimum: int, maximum: int) -> bool:
+def is_valid(pwd: str, char: Union[str, int], minimum: int, maximum: int) -> bool:
     """
     The function checks whether a password is valid or not.
     The validation is such that, the password must contain the character to be validated at least a certain number
     of times but not more than a certain number of times.
     Hence, the character occurrence is such that: minimum <= character occurrence <= maximum
     If the above holds true, the function returns True. Else, it returns False.
-    :param pwd: AnyStr - The password to be validated.
+    :param pwd: str - The password to be validated.
     :param char: Union[int, str] - The character to be used for validation.
     :param minimum: int - Minimum occurrence of the character to be validated.
     :param maximum: int - Maximum occurrence of the character to be validated.
@@ -54,7 +54,7 @@ def is_valid(pwd: AnyStr, char: Union[str, int], minimum: int, maximum: int) -> 
     return True
 
 
-def find_number_of_valid_passwords(data: list) -> int:
+def find_number_of_valid_passwords(data: Sequence[str]) -> int:
     number_of_valid_passwords = 0
 
     for line in data:
@@ -75,8 +75,8 @@ def main():
     with open("./input.txt") as f:
         puzzle_input = f.readlines()
 
-    find_number_of_valid_passwords(puzzle_input)
+    print(find_number_of_valid_passwords(puzzle_input))  # Answer: 519
 
 
 if __name__ == '__main__':
-    print(main())  # Answer: 519
+    main()

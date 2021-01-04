@@ -63,10 +63,10 @@ What is the ID of the earliest bus you can take to the airport multiplied by the
 for that bus?
 
 """
-from typing import List
+from typing import Sequence
 
 
-def find_soonest_bus(data: List[str]) -> int:
+def find_soonest_bus(data: Sequence[str]) -> int:
     """
     The soonest bus is the one greater than but closest to the timestamp.
     Multiply each bus number by the ceiling division of the timestamp and bus.

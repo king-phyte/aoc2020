@@ -21,29 +21,24 @@ Of course, your expense report is much larger. Find the two entries that sum
 to 2020; what do you get if you multiply them together?
 
 """
+from typing import Sequence
 
 TARGET = 2020
 
-with open("./day_one_input.txt") as f:
-    numbers = []
-    for line in f:
-        numbers.append(int(line.strip()))
 
-
-def find_target(numbers):
-    # index_of_second_number = 1
-    # for number in set(numbers):
-    #     while index_of_second_number < len(numbers):
-    #         second_number = numbers[index_of_second_number]
-    #         if number + second_number == TARGET:
-    #             return number * second_number
-    #         index_of_second_number += 1
-    #     index_of_second_number = 0
-
+def find_target(numbers: Sequence[int]) -> int:
     for number in numbers:
         remainder = TARGET - number
         if remainder in numbers:
             return remainder * number
 
 
-print(find_target(numbers))
+def main():
+    with open("./input.txt") as f:
+        numbers = [int(line.strip()) for line in f.readlines()]
+
+    print(find_target(numbers))  # Answer = 567171
+
+
+if __name__ == '__main__':
+    main()

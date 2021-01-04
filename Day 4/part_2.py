@@ -177,7 +177,7 @@ def hair_color_is_valid(hexadecimal_color: str) -> bool:
     :return: bool
     """
     valid_characters: List[str] = [str(i) for i in range(10)]
-    valid_characters += ["a", "b", "c", "d", "e", "f"]
+    valid_characters.extend(("a", "b", "c", "d", "e", "f"))
 
     if not hexadecimal_color.startswith("#") and (len(hexadecimal_color) <= 7):
         return False
@@ -242,9 +242,10 @@ def main():
     while "" in content:
         index = content.index("")
         passports.append(group_passport_data(content[:index]))
-        content = content[index + 1:]  # Remove the contents which has been grouped
-    else:
-        passports.append(group_passport_data(content))  # Take care of the last section of info left which has no ""
+        # Remove the contents which has been grouped
+        content = content[index + 1:]
+    else:  # Take care of the last section of info left which has no ""
+        passports.append(group_passport_data(content))
 
     for passport_info in passports:
         if passport_is_valid(passport_info):
