@@ -67,37 +67,27 @@ from typing import List
 
 from part_1 import parse_instruction_set, binary_to_decimal
 
-memory_block = defaultdict(list)
+memory_block = defaultdict(int)
 
 
-def flip_bits(address: str) -> List[int]:
+def flip_bits(address: str) -> List[str]:
     """
     Finds a list of all addresses in an address after it is masked.
-    Returns a list of all addresses in decimal (base 10)
+    Returns a list of all addresses in binary (base 2)
     :param address: 36-bit memory address. Eg: 0000011011111X1001101X1011X1001111X1 - str
-    :return: List of all addresses in the input address after masking - List[int]
+    :return: List of all addresses in the input address after masking - List[str]
     """
     all_addresses = []
-    masked_address = []
-    for bit in address.lstrip("0"):
-        if bit == "0":
-            masked_address.append(0)
-        elif bit == "1":
-            masked_address.append(1)
-        else:
-            masked_address.append(None)
-    number_of_masks = masked_address.count(None)
-    bits = itertools.product((0, 1), repeat=number_of_masks)
-    for bit in bits:
-        copy_of_masked_address = masked_address.copy()
-        iterable = iter(bit)
-        for i in range(len(copy_of_masked_address)):
-            if copy_of_masked_address[i] is None:
-                copy_of_masked_address[i] = next(iterable)
-        new_address = "".join([str(x) for x in copy_of_masked_address])
-        new_address_in_decimal = binary_to_decimal(new_address)
-        all_addresses.append(new_address_in_decimal)
-    return all_addresses
+    address = list(address)
+
+    indices = [i for i, element in enumerate(address) if element == "X"]
+    combinations = itertools.product(["0", "1"], repeat=len(indices))
+
+    for items in combinations:
+        for index, item in zip(indices, items):
+            address[index] = item
+        all_addresses.append("".join(address))
+        return all_addresses
 
 
 def execute_instructions(instruction_set: List[str]) -> None:

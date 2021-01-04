@@ -63,7 +63,7 @@ Execute the initialization program. What is the sum of all values left in memory
 from collections import defaultdict
 from typing import List
 
-memory_block = defaultdict(list)
+memory_block = defaultdict(int)
 
 
 def binary_to_decimal(binary: str) -> int:
