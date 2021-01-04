@@ -29,17 +29,17 @@ they contain one a or nine c, both within the limits of their respective policie
 How many passwords are valid according to their policies?
 
 """
-from typing import AnyStr, Union
+from typing import Union
 
 
-def is_valid(pwd: AnyStr, char: Union[str, int], minimum: int, maximum: int) -> bool:
+def is_valid(pwd: str, char: Union[str, int], minimum: int, maximum: int) -> bool:
     """
     The function checks whether a password is valid or not.
     The validation is such that, the password must contain the character to be validated at least a certain number
     of times but not more than a certain number of times.
     Hence, the character occurrence is such that: minimum <= character occurrence <= maximum
     If the above holds true, the function returns True. Else, it returns False.
-    :param pwd: AnyStr - The password to be validated.
+    :param pwd: str - The password to be validated.
     :param char: Union[int, str] - The character to be used for validation.
     :param minimum: int - Minimum occurrence of the character to be validated.
     :param maximum: int - Maximum occurrence of the character to be validated.
