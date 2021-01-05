@@ -46,10 +46,10 @@ Figure out where the navigation instructions lead. What is the Manhattan distanc
 starting position?
 
 """
-from typing import Union, List, Tuple, Any
+from typing import Union, List, Tuple, Sequence
 
 
-def move(_direction, amount, _location) -> Tuple[Any, Any]:
+def move(_direction: str, amount: int, _location: Tuple[int, int]) -> Tuple[int, int]:
     """
     Updates the _location based on +x, -y positioning.
     """
@@ -63,7 +63,7 @@ def move(_direction, amount, _location) -> Tuple[Any, Any]:
         return _location[0] - amount, _location[1]
 
 
-def ship_movements(data: List[str]) -> int:
+def ship_movements(data: Sequence[str]) -> int:
     directions = [(d[:1], int(d[1:])) for d in data]
     facing = "E"
     origin = (0, 0)

@@ -60,10 +60,10 @@ The first step of attacking the weakness in the XMAS data is to find the first n
 which is not the sum of two of the 25 numbers before it. What is the first number that does not have this property?
 
 """
-from typing import List
+from typing import List, Sequence
 
 
-def permute(lst: List[int]) -> List[tuple]:
+def permute(lst: Sequence[int]) -> List[tuple]:
     """
     Returns a list of tuples of all permutations (without repeated values).
     Note:
@@ -79,7 +79,7 @@ def permute(lst: List[int]) -> List[tuple]:
     return permuted
 
 
-def number_in_sum(num: int, lst: List[int]) -> bool:
+def number_in_sum(num: int, lst: Sequence[int]) -> bool:
     """
     Returns True if :param num is equal to the sum of any of the permutations in :param lst.
     Else, it returns false.

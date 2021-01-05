@@ -24,7 +24,7 @@ def main():
 
     for i in range(len(seat_ids)):
         if i not in seat_ids and i > 39:
-            print(i)
+            print(i)  # Answer = 607
 
 
 if __name__ == '__main__':

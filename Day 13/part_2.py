@@ -72,10 +72,10 @@ What is the earliest timestamp such that all of the listed bus IDs depart at off
 in the list?
 
 """
-from typing import List
+from typing import Sequence
 
 
-def find_subsequent_departures(data: List[str]) -> int:
+def find_subsequent_departures(data: Sequence[str]) -> int:
     """
     This solution jumps the increment up by the bus number after finding a timestamp
     that satisfies the (timestamp + offset) % bus requirement.
@@ -96,7 +96,7 @@ def main():
     with open("./input.txt") as f:
         puzzle_input = f.readlines()
 
-    print(find_subsequent_departures(puzzle_input))  # Answer = 672754131923874
+    print(find_subsequent_departures(puzzle_input))  # Answer = 672_754_131_923_874
 
 
 if __name__ == '__main__':

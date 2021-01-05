@@ -65,22 +65,21 @@ Starting at the top-left corner of your map and following a slope of right 3 and
 how many trees would you encounter?
 
 """
-from typing import List
+from typing import Sequence
 
 
-def encountered_tree(data: List[str], x_movement: int, y_movement: int) -> int:
+def encountered_tree(data: Sequence[str], x_movement: int, y_movement: int) -> int:
     """
     Checks if a tree (#) is encountered in a data.
     The data in transversed to the right by x_movements and downwards by y_movements.
     It returns the total number of trees encountered in the data in the order of transversal.
 
-    :param data: List[str] - A list of lines to be transversed.
+    :param data: Sequence[str] - A list of lines to be transversed.
     :param x_movement: int - The movement in the x-axis along the line in the data.
     :param y_movement: int - The movement in the y-axis along the line in the data.
     :return: int - The total number of trees encountered.
     """
     number_of_trees_encountered = 0
-
     index = 0
 
     for line in data:
@@ -89,7 +88,6 @@ def encountered_tree(data: List[str], x_movement: int, y_movement: int) -> int:
         if (y_movement != 2) or (line_index % y_movement != 0):
             if (index >= 0) and (line[index] == "#"):
                 number_of_trees_encountered += 1
-
         elif (y_movement == 2) and (line_index % y_movement == 0):
             continue
 
@@ -104,7 +102,7 @@ def main():
 
     # Duplicate the lines side by side 39 times to improve the convenience of transversing the lines.
     # There is no specific reason for choosing 39. It just was convenient at the time.
-    # To stay safe, use multiple of 13 greater than or equal to 39
+    # To stay safe though, use a multiple of 13 greater than or equal to 39
     convenient_input = [(line.strip() * 39) for line in puzzle_input]
     print(encountered_tree(convenient_input, 3, 1))  # Answer = 173
 

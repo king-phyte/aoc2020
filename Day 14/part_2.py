@@ -63,9 +63,8 @@ in memory after it completes?
 """
 from collections import defaultdict
 import itertools
-from typing import List
-
-from part_1 import parse_instruction_set, binary_to_decimal
+from typing import List, Sequence
+from part_1 import parse_instruction_set
 
 memory_block = defaultdict(int)
 
@@ -87,10 +86,10 @@ def flip_bits(address: str) -> List[str]:
         for index, item in zip(indices, items):
             address[index] = item
         all_addresses.append("".join(address))
-        return all_addresses
+    return all_addresses
 
 
-def execute_instructions(instruction_set: List[str]) -> None:
+def execute_instructions(instruction_set: Sequence[str]) -> None:
     mask = instruction_set[0].split("= ")[1]
     instructions = instruction_set[1:]
 
@@ -123,7 +122,7 @@ def main():
     for group in convenient_input:
         execute_instructions(group)
 
-    print(sum(memory_block.values()))  # Answer = 3817372618036
+    print(sum(memory_block.values()))  # Answer = 3_817_372_618_036
 
 
 if __name__ == '__main__':

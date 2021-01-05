@@ -119,7 +119,7 @@ def main():
         puzzle_input = f.readlines()
 
     seat_ids = [find_seat_id(seat.strip()) for seat in puzzle_input]
-    print(max(seat_ids))
+    print(max(seat_ids))  # Answer: 980
 
 
 if __name__ == '__main__':

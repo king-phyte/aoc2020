@@ -52,23 +52,23 @@ In this example, the sum of these counts is 3 + 3 + 3 + 1 + 1 = 11.
 For each group, count the number of questions to which anyone answered "yes". What is the sum of those counts?
 
 """
-from typing import List
+from typing import List, Sequence
 
 
-def number_of_yes_in_group(group: List[str]) -> int:
+def number_of_yes_in_group(group: Sequence[str]) -> int:
     """
     Finds the number of yeses in a group.
     Since duplicate yeses are not counted, they are removed with "set()" function
     The number of yeses corresponds to the size of the group without duplicates.
     The function returns the number of yeses as described above.
 
-    :param group: List[str] - Answers from a group
+    :param group: Sequence[str] - Answers from a group
     :return: int - Number of yeses in a group
     """
     return len(set(group))
 
 
-def make_input_convenient(raw_input: List[str]) -> List[str]:
+def make_input_convenient(raw_input: Sequence[str]) -> List[str]:
     """
     Makes an input convenient for further processing.
     This is done by flattening out the list.

@@ -38,10 +38,10 @@ In this example, the sum of these counts is 3 + 0 + 1 + 1 + 1 = 6.
 For each group, count the number of questions to which everyone answered "yes". What is the sum of those counts?
 
 """
-from typing import List
+from typing import List, Tuple, Sequence
 
 
-def restart_search(chars, group_size, yes):
+def restart_search(chars: List[str], group_size: int, yes: int) -> Tuple[List[str], int]:
     for char in chars:
         if chars.count(char) == group_size:
             yes += 1
@@ -54,7 +54,7 @@ def restart_search(chars, group_size, yes):
     return chars, yes
 
 
-def number_of_yes_in_group(group: List[str]) -> int:
+def number_of_yes_in_group(group: Sequence[str]) -> int:
     """
     Finds and returns the number of yeses in a group.
     :param group:
@@ -79,14 +79,14 @@ def number_of_yes_in_group(group: List[str]) -> int:
     return yeses
 
 
-def make_input_convenient(raw_input: List[str]) -> List[str]:
+def make_input_convenient(raw_input: Sequence[str]) -> List[str]:
     """
     Makes an input convenient for further processing.
     This is done by flattening out the list.
     The function returns a list of strings convenient for processing.
 
 
-    :param raw_input: List[str] - A list of strings to be made convenient.
+    :param raw_input: Sequence[str] - A list of strings to be made convenient.
     :return: - List[str] - Convenient output
     """
     convenient = []

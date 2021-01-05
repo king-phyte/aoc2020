@@ -58,10 +58,10 @@ Count the number of valid passports - those that have all required fields. Treat
 In your batch file, how many passports are valid?
 
 """
-from typing import List
+from typing import List, Sequence, Dict
 
 
-def group_passport_data(data: List[str]) -> dict:
+def group_passport_data(data: Sequence[str]) -> Dict[str, str]:
     """
     Groups a list of string values into a dictionary.
     It splits the data by spaces and a colon(:) and generates a key-value pair.
@@ -82,7 +82,7 @@ def group_passport_data(data: List[str]) -> dict:
     return passport
 
 
-def passport_is_valid(passport: dict) -> bool:
+def passport_is_valid(passport:  Dict[str, str]) -> bool:
     """
     Checks if a passport is valid or not.
     A passport is valid if it has all of the following keys:
@@ -107,7 +107,7 @@ def main():
     with open("./input.txt") as f:
         content: List[str] = [line.strip() for line in f.readlines()]
 
-    passports: List[dict] = []
+    passports = []
 
     while "" in content:
         index = content.index("")

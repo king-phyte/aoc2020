@@ -101,10 +101,10 @@ Simulate your seating area by applying the seating rules repeatedly until no sea
 How many seats end up occupied?
 
 """
-from typing import List
+from typing import List, Sequence
 
 
-def switches(matrix) -> List[List[str]]:
+def switches(matrix: Sequence[Sequence[str]]) -> List[List[str]]:
     """
     Makes an array out of each seat surrounding the current seat and checks to see if there is >= 4 or 0
     occupied seats and updates the seats as needed.
@@ -136,7 +136,7 @@ def switches(matrix) -> List[List[str]]:
     return new_matrix
 
 
-def switch_loop(matrix: List[List[str]], old_matrix: List[list]) -> List[List[str]]:
+def switch_loop(matrix: Sequence[Sequence[str]], old_matrix: Sequence[Sequence[str]]) -> List[List[str]]:
     """
     Loops through permutations until we get the same seating arrangement twice.
     Returns the matrix if it is equal to the old matrix.
@@ -148,10 +148,10 @@ def switch_loop(matrix: List[List[str]], old_matrix: List[list]) -> List[List[st
     return matrix if (matrix == old_matrix) else switch_loop(switches(matrix), matrix)
 
 
-def occupied_seats(data: List[str]) -> int:
+def occupied_seats(data: Sequence[str]) -> int:
     """
     Returns the number of # in the final matrix
-    :param data: Puzzle input - List[str]
+    :param data: Puzzle input - Sequence[str]
     :return: Number of # found - int
     """
     matrix = [list(x) for x in data]
@@ -164,7 +164,7 @@ def main():
     with open("input.txt") as f:
         puzzle_input = [line.strip() for line in f.readlines()]
 
-    print(occupied_seats(puzzle_input))  # Answer = 2418s
+    print(occupied_seats(puzzle_input))  # Answer = 2418
 
 
 if __name__ == '__main__':

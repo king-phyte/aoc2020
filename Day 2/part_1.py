@@ -29,7 +29,7 @@ they contain one a or nine c, both within the limits of their respective policie
 How many passwords are valid according to their policies?
 
 """
-from typing import Union
+from typing import Union, Sequence
 
 
 def is_valid(pwd: str, char: Union[str, int], minimum: int, maximum: int) -> bool:
@@ -54,7 +54,7 @@ def is_valid(pwd: str, char: Union[str, int], minimum: int, maximum: int) -> boo
     return True
 
 
-def find_number_of_valid_passwords(data: list) -> int:
+def find_number_of_valid_passwords(data: Sequence[str]) -> int:
     number_of_valid_passwords = 0
 
     for line in data:
@@ -75,8 +75,8 @@ def main():
     with open("./input.txt") as f:
         puzzle_input = f.readlines()
 
-    find_number_of_valid_passwords(puzzle_input)
+    print(find_number_of_valid_passwords(puzzle_input))  # Answer: 519
 
 
 if __name__ == '__main__':
-    print(main())  # Answer: 519
+    main()

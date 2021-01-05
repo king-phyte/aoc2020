@@ -59,12 +59,12 @@ trillion valid ways to arrange them! Surely, there must be an efficient way to c
 What is the total number of distinct ways you can arrange the adapters to connect the charging outlet to your device?
 
 """
-from typing import List, Dict
+from typing import Dict, Sequence
 from collections import defaultdict
 import part_1
 
 
-def count_sequences(differences: List[int]) -> Dict[int, int]:
+def count_sequences(differences: Sequence[int]) -> Dict[int, int]:
     counter = 0
     result = defaultdict(int)
     for number in differences:
@@ -94,7 +94,7 @@ def main():
     for key, value in sequence.items():
         total *= multiples[key] ** value
 
-    print(total)  # Answer = 6908379398144
+    print(total)  # Answer = 6_908_379_398_144
 
 
 if __name__ == '__main__':

@@ -36,35 +36,35 @@ Figure out where the navigation instructions actually lead. What is the Manhatta
 the ship's starting position?
 
 """
-from typing import List, Tuple, Any
+from typing import Tuple, Sequence
 
 
-def move_waypoint(_direction: str, amount: int, _location: Tuple[int, int]) -> Tuple[Any, Any]:
-    if _direction == "N":
-        return _location[0], _location[1] + amount
-    if _direction == "S":
-        return _location[0], _location[1] - amount
-    if _direction == "E":
-        return _location[0] + amount, _location[1]
-    if _direction == "W":
-        return _location[0] - amount, _location[1]
+def move_waypoint(direction: str, amount: int, location: Tuple[int, int]) -> Tuple[int, int]:
+    if direction == "N":
+        return location[0], location[1] + amount
+    if direction == "S":
+        return location[0], location[1] - amount
+    if direction == "E":
+        return location[0] + amount, location[1]
+    if direction == "W":
+        return location[0] - amount, location[1]
 
 
-def turns(_direction: Tuple[str, int], _location: Tuple[int, int]) -> Tuple[Any, Any]:
+def turns(direction: Tuple[str, int], location: Tuple[int, int]) -> Tuple[int, int]:
     """
     Rotating the waypoint around the ship is just negating the coordinates in the case of 180,
     or flipping both and negating one if rotation is a quarter turn.
     """
-    degree = _direction[1] if (_direction[0] == "R") else -_direction[1]
+    degree = direction[1] if (direction[0] == "R") else -direction[1]
     if abs(degree) == 180:
-        return - _location[0], - _location[1]
+        return - location[0], - location[1]
     elif (degree == 90) or (degree == -270):
-        return _location[1], - _location[0]
+        return location[1], - location[0]
     elif (degree == -90) or (degree == 270):
-        return - _location[1], _location[0]
+        return - location[1], location[0]
 
 
-def waypoint_movements(data: List[str]) -> int:
+def waypoint_movements(data: Sequence[str]) -> int:
     directions = [(d[:1], int(d[1:])) for d in data]
     origin = (0, 0)
     waypoint = (10, 1)

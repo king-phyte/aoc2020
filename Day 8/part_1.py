@@ -59,20 +59,18 @@ Run your copy of the boot code. Immediately before any instruction is executed a
 accumulator?
 
 """
+from typing import List
 
 
-def main():
-    with open("./input.txt") as f:
-        puzzle_input = [line.strip().split() for line in f.readlines()]
+def find_accumulator(data: List[List[str]]) -> int:
 
     accumulator = 0
     index = 0
 
     while True:
-        instruction_set = puzzle_input[index]
+        instruction_set = data[index]
         if "run" in instruction_set:
-            print(accumulator)
-            break
+            return accumulator
         else:
             instruction = instruction_set[0]
             signed_integer = instruction_set[1]
@@ -95,5 +93,12 @@ def main():
             instruction_set.append("run")
 
 
+def main():
+    with open("./input.txt") as f:
+        puzzle_input = [line.strip().split() for line in f.readlines()]
+
+    print(find_accumulator(puzzle_input))  # Answer = 1801
+
+
 if __name__ == '__main__':
-    main()  # Answer = 1801
+    main()
