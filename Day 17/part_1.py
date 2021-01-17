@@ -178,16 +178,16 @@ def iter_neighbors(x: int, y: int, z: int) -> Iterator[Coordinates]:
 
 
 @dataclass
-class PocketDim:
+class PocketDimension:
     active_cubes: Set[Coordinates]
 
     def is_active(self, x: int, y: int, z: int) -> bool:
         return (x, y, z) in self.active_cubes
 
     def copy(self):
-        return PocketDim(self.active_cubes.copy())
+        return PocketDimension(self.active_cubes.copy())
 
-    def step(self) -> 'PocketDim':
+    def step(self) -> 'PocketDimension':
         """
         Returns a copy of this pocket dimension evolved by 1 step.
         """
@@ -210,10 +210,10 @@ class PocketDim:
             if neighbors_count == 3:
                 new_active_cubes.add((x, y, z))
 
-        return PocketDim(new_active_cubes)
+        return PocketDimension(new_active_cubes)
 
 
-def parse_pocket_dim(content: str) -> PocketDim:
+def parse_pocket_dimensions(content: str) -> PocketDimension:
     content = content.strip()
 
     active_cubes = set()
@@ -225,18 +225,20 @@ def parse_pocket_dim(content: str) -> PocketDim:
             elif char == '#':
                 active_cubes.add((char_ix, line_ix, 0))
 
-    return PocketDim(active_cubes)
+    return PocketDimension(active_cubes)
 
 
 def main():
     with open('./input.txt') as f:
-        contents = f.read()
-        original_dimension = parse_pocket_dim(contents)
+        puzzle_input = f.read()
+        original_dimension = parse_pocket_dimensions(puzzle_input)
+
+    cycles = 6
 
     dimension = original_dimension
-    for i in range(6):
+    for _ in range(cycles):
         dimension = dimension.step()
-    print(f"Active cubes after 6 steps: {len(dimension.active_cubes)}")  # Answer = 284
+    print(len(dimension.active_cubes))  # Answer = 284
 
 
 if __name__ == "__main__":
