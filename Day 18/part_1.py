@@ -71,8 +71,8 @@ def extract_bracket(expression: str) -> str:
             val[1].append(val[0].getvalue())
             val[0] = StringIO()
 
-    print(val[1])
-    return "\n".join(val[1])
+    print(val[1][0])
+    return val[1][0]
 
 
 def evaluate_expression(expression: str) -> int:
@@ -99,7 +99,7 @@ def evaluate_expression(expression: str) -> int:
                 expression = str(value_of_expression) + expression[next_operand_index + 1:]
                 index_of_current_char = 0
         elif current_char == "(":
-            extract_bracket(expression)
+            print(extract_bracket(expression))
 
         index_of_current_char += 1
 
