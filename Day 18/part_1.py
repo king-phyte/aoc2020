@@ -45,6 +45,15 @@ Before you can help with the homework, you need to understand it yourself.
 Evaluate the expression on each line of the homework; what is the sum of the resulting values?
 """
 from io import StringIO
+from simpleeval import simple_eval
+
+
+def evaluate_addition(expression: str) -> int:
+    return simple_eval(expression)
+
+
+def evaluate_multiplication(expression: str) -> int:
+    return simple_eval(expression)
 
 
 def extract_bracket(expression: str) -> str:
@@ -61,18 +70,38 @@ def extract_bracket(expression: str) -> str:
         if not p and val[0].tell():
             val[1].append(val[0].getvalue())
             val[0] = StringIO()
+
+    print(val[1])
     return "\n".join(val[1])
 
 
 def evaluate_expression(expression: str) -> int:
-    value_of_expression = 0
+    value_of_expression = ""
+    index_of_current_char = 0
     while expression:
-        index_of_current_char = 0
+        if expression.isdigit():
+            return int(value_of_expression)
+        next_operand_index = index_of_current_char + 2
+        next_operand = expression[next_operand_index]
         current_char = expression[index_of_current_char]
-        if current_char == "(":
-            expression_in_bracket = extract_bracket(expression)
 
-            evaluate_expression(expression_in_bracket[1:-1])
+        if current_char == "+":
+            if next_operand.isdigit():
+                value_of_expression = evaluate_addition(expression[:next_operand_index + 1])
+                print(value_of_expression)
+                expression = str(value_of_expression) + expression[next_operand_index + 1:]
+                index_of_current_char = 0
+
+        elif current_char == "*":
+            if next_operand.isdigit():
+                value_of_expression = evaluate_multiplication(expression[:next_operand_index + 1])
+                print(value_of_expression)
+                expression = str(value_of_expression) + expression[next_operand_index + 1:]
+                index_of_current_char = 0
+        elif current_char == "(":
+            extract_bracket(expression)
+
+        index_of_current_char += 1
 
 def main():
     # with open("./input.txt") as f:
