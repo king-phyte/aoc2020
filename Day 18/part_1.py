@@ -49,10 +49,19 @@ from simpleeval import simple_eval
 
 
 def evaluate_operation(expression: str) -> int:
+    """
+    Uses a "better" form of (built-in) eval (, security-wise) to evaluate an expression and return an integer
+    """
     return simple_eval(expression)
 
 
 def extract_bracket(expression: str) -> str:
+    """
+    Extracts and returns the contents of the first and outermost bracket.
+    Examples:
+        extract_bracket("2 + (3 * 4)") => 3 * 4
+        extract_bracket("(1 + (2 + 3))") => 1 + (2 + 3))
+    """
     level_within_bracket = 0
     value = [StringIO(), []]
 
@@ -71,6 +80,10 @@ def extract_bracket(expression: str) -> str:
 
 
 def evaluate_expression(expression: str) -> int:
+    """
+    Evaluates an expression from left to right with no regard for precedence of some operators.
+    Returns the value of the expression after evaluation
+    """
     value_of_expression = ""
     index_of_current_char = 0
     while expression:
@@ -99,6 +112,8 @@ def evaluate_expression(expression: str) -> int:
             expression_in_bracket = extract_bracket(expression)
             value_of_bracket_expression = evaluate_expression(expression_in_bracket)
             if expression.startswith("("):
+                # If the expression starts with a (, the value of the expression must
+                # replace the bracket accordingly (from the start)
                 bracket_ends_at = len(expression_in_bracket) + 1
                 expression = str(value_of_bracket_expression) + expression[bracket_ends_at + 1:]
             else:
