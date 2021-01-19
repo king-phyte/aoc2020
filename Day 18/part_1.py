@@ -57,56 +57,82 @@ def evaluate_multiplication(expression: str) -> int:
 
 
 def extract_bracket(expression: str) -> str:
-    p = 0
+    inside_bracket = 0
     val = [StringIO(), []]
 
-    for char in expression:
+    for char in expression[expression.index("("):]:
         if char == "(":
-            p += 1
-        if p:
+            inside_bracket += 1
+        if inside_bracket:
             val[0].write(char)
-        if char == ")" and p:
-            p -= 1
-        if not p and val[0].tell():
+        if char == ")" and inside_bracket:
+            inside_bracket -= 1
+        if not inside_bracket and val[0].tell():
             val[1].append(val[0].getvalue())
             val[0] = StringIO()
-
-    print(val[1][0])
-    return val[1][0]
+        if len(val[1]) == 1:
+            return val[1][0][1:-1]
 
 
 def evaluate_expression(expression: str) -> int:
     value_of_expression = ""
     index_of_current_char = 0
     while expression:
-        if expression.isdigit():
+        if expression.rstrip().isdigit():
             return int(value_of_expression)
+        current_char = expression[index_of_current_char]
         next_operand_index = index_of_current_char + 2
         next_operand = expression[next_operand_index]
-        current_char = expression[index_of_current_char]
 
         if current_char == "+":
             if next_operand.isdigit():
-                value_of_expression = evaluate_addition(expression[:next_operand_index + 1])
-                print(value_of_expression)
-                expression = str(value_of_expression) + expression[next_operand_index + 1:]
+                value_of_expression = evaluate_addition(" ".join(expression.split()[:3]))
+                expression = str(value_of_expression) + " " + " ".join(expression.split()[3:])
+                index_of_current_char = 0
+            elif next_operand == "(":
+                expression_in_bracket = extract_bracket(expression)
+                value_of_bracket_expression = evaluate_expression(expression_in_bracket)
+                bracket_starts_at = next_operand_index
+                bracket_ends_at = next_operand_index + len(expression_in_bracket) + 1
+                expression = expression[:bracket_starts_at] \
+                    + str(value_of_bracket_expression) \
+                    + expression[bracket_ends_at + 1:]
                 index_of_current_char = 0
 
         elif current_char == "*":
             if next_operand.isdigit():
-                value_of_expression = evaluate_multiplication(expression[:next_operand_index + 1])
-                print(value_of_expression)
-                expression = str(value_of_expression) + expression[next_operand_index + 1:]
+                value_of_expression = evaluate_addition(" ".join(expression.split()[:3]))
+                if expression.split():
+                    expression = str(value_of_expression) + " " + " ".join(expression.split()[3:])
+                else:
+                    expression = str(value_of_expression)
+                index_of_current_char = 0
+            elif next_operand == "(":
+                expression_in_bracket = extract_bracket(expression)
+                value_of_bracket_expression = evaluate_expression(expression_in_bracket)
+                bracket_starts_at = next_operand_index
+                bracket_ends_at = next_operand_index + len(expression_in_bracket) + 1
+                expression = expression[:bracket_starts_at] + str(value_of_bracket_expression) + expression[
+                                                                                                 bracket_ends_at + 1:]
                 index_of_current_char = 0
         elif current_char == "(":
-            print(extract_bracket(expression))
+            expression_in_bracket = extract_bracket(expression)
+            value_of_bracket_expression = evaluate_expression(expression_in_bracket)
+            if expression.startswith("("):
+                bracket_ends_at = len(expression_in_bracket) + 1
+                expression = str(value_of_bracket_expression) + expression[bracket_ends_at + 1:]
+            else:
+                bracket_starts_at = next_operand_index
+                bracket_ends_at = next_operand_index + len(expression_in_bracket) + 1
+                expression = expression[:bracket_starts_at] + str(value_of_bracket_expression) + expression[
+                                                                                             bracket_ends_at + 1:]
+            index_of_current_char = 0
 
         index_of_current_char += 1
 
+
 def main():
-    # with open("./input.txt") as f:
-    #     puzzle_input = [line.strip() for line in f.readlines()]
-    with open("./test.txt") as f:
+    with open("./input.txt") as f:
         puzzle_input = [line.strip() for line in f.readlines()]
 
     sum_of_values = 0
@@ -114,8 +140,9 @@ def main():
     for line in puzzle_input:
         sum_of_values += evaluate_expression(line)
 
-    print(sum_of_values)
+    print(sum_of_values)  # Answer = 4696493914530
 
 
 if __name__ == '__main__':
     main()
+
