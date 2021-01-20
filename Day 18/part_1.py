@@ -44,7 +44,6 @@ Here are a few more examples:
 Before you can help with the homework, you need to understand it yourself.
 Evaluate the expression on each line of the homework; what is the sum of the resulting values?
 """
-from io import StringIO
 from simpleeval import simple_eval
 
 
@@ -63,20 +62,17 @@ def extract_bracket(expression: str) -> str:
         extract_bracket("(1 + (2 + 3))") => 1 + (2 + 3))
     """
     level_within_bracket = 0
-    value = [StringIO(), []]
+    expression_within_bracket = ""
 
     for char in expression[expression.index("("):]:
         if char == "(":
             level_within_bracket += 1
         if level_within_bracket:
-            value[0].write(char)
+            expression_within_bracket += char
         if char == ")" and level_within_bracket:
             level_within_bracket -= 1
-        if level_within_bracket == 0 and value[0].tell():
-            value[1].append(value[0].getvalue())
-            value[0] = StringIO()
-        if len(value[1]) == 1:
-            return value[1][0][1:-1]  # Remove parentheses from expression with [1:-1]
+        if not level_within_bracket:
+            return expression_within_bracket[1:-1]  # Remove parentheses from expression with [1:-1]
 
 
 def evaluate_expression(expression: str) -> int:
@@ -119,8 +115,9 @@ def evaluate_expression(expression: str) -> int:
             else:
                 bracket_starts_from = next_operand_index
                 bracket_ends_at = next_operand_index + len(expression_in_bracket) + 1
-                expression = expression[:bracket_starts_from] + str(value_of_bracket_expression) + expression[
-                                                                                             bracket_ends_at + 1:]
+                expression = expression[:bracket_starts_from] \
+                    + str(value_of_bracket_expression) \
+                    + expression[bracket_ends_at + 1:]
             index_of_current_char = 0
 
         index_of_current_char += 1
