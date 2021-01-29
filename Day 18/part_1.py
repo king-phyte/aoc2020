@@ -82,9 +82,9 @@ def evaluate_expression(expression: str) -> int:
     """
     value_of_expression = ""
     index_of_current_char = 0
-    while expression:
-        if expression.rstrip().isdigit():
-            return int(value_of_expression)
+    while True:
+        if expression.strip().isdigit():
+            return int(expression)
         current_char = expression[index_of_current_char]
         next_operand_index = index_of_current_char + 2
         next_operand = expression[next_operand_index]
