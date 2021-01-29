@@ -105,7 +105,7 @@ How many # are not part of a sea monster?
 import re
 from collections import defaultdict
 from itertools import product
-from typing import Dict, List, Sequence, Tuple
+from typing import Dict, List, Sequence, Set, Union, Tuple
 
 from part_1 import matches, find_edges
 
@@ -127,24 +127,22 @@ def flip_y(image):
 
 
 def rotate(image: Sequence[str]):
-    im = []
+    rotated_image = []
     row = []
 
     for x in range(len(image[0])):
         for y in range(len(image)):
             row.append(image[y][x])
-        im.append(row[::-1])
+        rotated_image.append(row[::-1])
         row = []
 
     if row:
-        im.append(row)
+        rotated_image.append(row)
 
-    a = tuple(tuple(row) for row in im)
-    print(a)
-    return a
+    return tuple(tuple(row) for row in rotated_image)
 
 
-def flipturns(image):
+def flip_turns(image) -> Set[Union[Tuple[Tuple[str, ...], ...], Tuple[tuple, ...]]]:
     out = set()
 
     for _ in range(4):
@@ -155,8 +153,8 @@ def flipturns(image):
     return out
 
 
-def count_monsters(image):
-    monsterflips = flipturns(MONSTER)
+def count_monsters(image: Sequence[Sequence[str]]) -> int:
+    monster_flips = flip_turns(MONSTER)
 
     squares = {(y, x) for y in range(len(image)) for x in range(len(image[0])) if image[y][x] == '#'}
     monstered = set()
@@ -164,18 +162,18 @@ def count_monsters(image):
     height = len(image)
     width = len(image[0])
 
-    for m in monsterflips:
-        mheight = len(m)
-        mwidth = len(m[0])
+    for monster in monster_flips:
+        monster_height = len(monster)
+        monster_width = len(monster[0])
 
-        for y in range(height - mheight + 1):
-            for x in range(width - mwidth + 1):
+        for y in range(height - monster_height + 1):
+            for x in range(width - monster_width + 1):
                 match = True
                 hit = set()
 
-                for dy in range(mheight):
-                    for dx in range(mwidth):
-                        if m[dy][dx] != '#':
+                for dy in range(monster_height):
+                    for dx in range(monster_width):
+                        if monster[dy][dx] != '#':
                             continue
                         if image[y + dy][x + dx] != '#':
                             match = False
@@ -278,26 +276,27 @@ def solve(tiles: Dict[int, Sequence[str]]) -> int:
                     up, down, left, right = find_edges(tile)
 
             if y < height - 1:
-                did = coord_to_id[(y + 1, x)]
-                dtile = tiles[did]
-                dedges = find_edges(dtile)
+                down_tile_id = coord_to_id[(y + 1, x)]
+                down_tile = tiles[down_tile_id]
+                down_tile_edges = find_edges(down_tile)
 
-                if not any(matches(down, edge) for edge in dedges):
+                if not any(matches(down, edge) for edge in down_tile_edges):
                     tile = flip_y(tile)
+
             else:
-                uid = coord_to_id[(y - 1, x)]
-                utile = tiles[uid]
-                uedges = find_edges(utile)
+                up_tile_id = coord_to_id[(y - 1, x)]
+                up_tile = tiles[up_tile_id]
+                up_tile_edges = find_edges(up_tile)
 
-                if not any(matches(up, edge) for edge in uedges):
+                if not any(matches(up, edge) for edge in up_tile_edges):
                     tile = flip_y(tile)
 
-            starty = y * (tile_height - 2)
-            startx = x * (tile_width - 2)
+            start_y = y * (tile_height - 2)
+            start_x = x * (tile_width - 2)
 
             for dy in range(tile_height - 2):
                 for dx in range(tile_width - 2):
-                    canvas[starty + dy][startx + dx] = tile[dy + 1][dx + 1]
+                    canvas[start_y + dy][start_x + dx] = tile[dy + 1][dx + 1]
 
     return count_monsters(canvas)
 

@@ -193,7 +193,7 @@ def digits_in(line: str) -> Union[List[int], list]:
     return [int("".join(result))] if result else []
 
 
-def find_edges(tile: Sequence[str]) -> Tuple[str, str, str, str]:
+def find_edges(tile: Union[Sequence[str], Sequence[Sequence[str]]]) -> Tuple[str, str, str, str]:
     first = "".join(tile[0])
     last = "".join(tile[-1])
     first_in_row = []
