@@ -105,8 +105,7 @@ How many # are not part of a sea monster?
 import re
 from collections import defaultdict
 from itertools import product
-from typing import Dict, List, Sequence, Set, Union, Tuple
-
+from typing import Dict, List, Sequence, Set, Tuple
 from part_1 import matches, find_edges
 
 MONSTER = (
@@ -116,17 +115,17 @@ MONSTER = (
 )
 
 
-def ints(line):
+def find_integers(line: str) -> List[int]:
     pattern = re.compile(r'-?\d+')
 
     return [int(val) for val in re.findall(pattern, line) if val]
 
 
-def flip_y(image):
+def flip_vertically(image: Sequence[Sequence[str]]) -> Tuple[Tuple[str], ...]:
     return tuple(tuple(row) for row in image[::-1])
 
 
-def rotate(image: Sequence[str]):
+def rotate(image: Sequence[str]) -> Tuple[Tuple[str]]:
     rotated_image = []
     row = []
 
@@ -142,15 +141,15 @@ def rotate(image: Sequence[str]):
     return tuple(tuple(row) for row in rotated_image)
 
 
-def flip_turns(image) -> Set[Union[Tuple[Tuple[str, ...], ...], Tuple[tuple, ...]]]:
-    out = set()
+def flip_turns(image: Tuple[str, str, str]) -> Set[Tuple[Tuple[str, ...], ...]]:
+    flipped_turn = set()
 
     for _ in range(4):
         image = rotate(image)
-        out.add(image)
-        out.add(flip_y(image))
+        flipped_turn.add(image)
+        flipped_turn.add(flip_vertically(image))
 
-    return out
+    return flipped_turn
 
 
 def count_monsters(image: Sequence[Sequence[str]]) -> int:
@@ -186,7 +185,7 @@ def count_monsters(image: Sequence[Sequence[str]]) -> int:
     return len(squares - monstered)
 
 
-def solve(tiles: Dict[int, Sequence[str]]) -> int:
+def find_monsters(tiles: Dict[int, Sequence[str]]) -> List[List[str]]:
     sides = {}
 
     for tile_id, tile in tiles.items():
@@ -238,8 +237,10 @@ def solve(tiles: Dict[int, Sequence[str]]) -> int:
             left = [k for k, v in image.items() if v == (y, x - 1)][0]
             up = [k for k, v in image.items() if v == (y - 1, x)][0]
 
-            intersection = [tile_id for tile_id in graph.keys()
-                            if (tile_id in graph[left]) and (tile_id in graph[up]) and (tile_id not in image)][0]
+            intersection = [
+                tile_id for tile_id in graph.keys() if (tile_id in graph[left])
+                and (tile_id in graph[up])
+                and (tile_id not in image)][0]
 
             image[intersection] = (y, x)
 
@@ -281,7 +282,7 @@ def solve(tiles: Dict[int, Sequence[str]]) -> int:
                 down_tile_edges = find_edges(down_tile)
 
                 if not any(matches(down, edge) for edge in down_tile_edges):
-                    tile = flip_y(tile)
+                    tile = flip_vertically(tile)
 
             else:
                 up_tile_id = coord_to_id[(y - 1, x)]
@@ -289,7 +290,7 @@ def solve(tiles: Dict[int, Sequence[str]]) -> int:
                 up_tile_edges = find_edges(up_tile)
 
                 if not any(matches(up, edge) for edge in up_tile_edges):
-                    tile = flip_y(tile)
+                    tile = flip_vertically(tile)
 
             start_y = y * (tile_height - 2)
             start_x = x * (tile_width - 2)
@@ -298,18 +299,21 @@ def solve(tiles: Dict[int, Sequence[str]]) -> int:
                 for dx in range(tile_width - 2):
                     canvas[start_y + dy][start_x + dx] = tile[dy + 1][dx + 1]
 
-    return count_monsters(canvas)
+    return canvas
 
 
 def parse_input(data: Sequence[str]) -> Dict[int, List[str]]:
+    """
+    Parses the input into a dictionary of numbers (tile IDs) and tiles
+    """
     tiles = {}
     tile = []
     tile_id = -1
 
     for line in data:
         if line.strip():
-            if ints(line):
-                tile_id = ints(line)[0]
+            if find_integers(line):
+                tile_id = find_integers(line)[0]
             else:
                 tile.append(line.strip())
         else:
@@ -322,13 +326,13 @@ def parse_input(data: Sequence[str]) -> Dict[int, List[str]]:
 
 
 def main():
-
     with open("./input.txt") as f:
         puzzle_input = f.readlines()
 
     tiles = parse_input(puzzle_input)
 
-    print(solve(tiles))  # Answer = 1957
+    canvas = find_monsters(tiles)
+    print(count_monsters(canvas))  # Answer = 1957
 
 
 if __name__ == '__main__':
