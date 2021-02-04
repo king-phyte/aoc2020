@@ -102,7 +102,7 @@ sea monster. In the above example, the habitat's water roughness is 273.
 How many # are not part of a sea monster?
 
 """
-import re
+import re  # Couldn't escape re forever :(
 from collections import defaultdict
 from itertools import product
 from typing import Dict, List, Sequence, Set, Tuple
