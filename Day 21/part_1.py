@@ -45,7 +45,8 @@ from typing import List, Sequence, Tuple, Set, Dict
 from functools import reduce
 
 
-def ingredients_without_allergens(allergens, lines) -> int:
+def count_ingredients_without_allergens(allergens: Dict[Set[str], Set[str]],
+                                        lines: Sequence[Tuple[Set[str], Set[str]]]) -> int:
     used = set()
 
     for allergen in allergens.values():
@@ -112,7 +113,7 @@ def main():
 
     lines = parse_input(puzzle_input)
     allergens = find_allergens(lines)
-    print(ingredients_without_allergens(allergens, lines))  # Answer = 2635
+    print(count_ingredients_without_allergens(allergens, lines))  # Answer = 2635
 
 
 if __name__ == '__main__':
