@@ -419,10 +419,11 @@ Defend your honor as Raft Captain by playing the small crab in a game of Recursi
 before. What is the winning player's score?
 
 """
+from typing import Sequence, List, Tuple
 from part_1 import find_players_deck, sum_winner_score
 
 
-def play_game(games_played, player1, player2):
+def play_game(games_played: set, player1: Sequence[int], player2: Sequence[int]) -> Tuple[List[int], List[int]]:
     while player1 and player2:
         t = (tuple(player1), tuple(player2))
 
@@ -451,7 +452,7 @@ def play_game(games_played, player1, player2):
     return player1, player2
 
 
-def find_winner(player1, player2):
+def find_winner(player1: Sequence[int], player2: Sequence[int]) -> List[int]:
     player1, player2 = play_game(set(), player1, player2)
     winner = player1 if player1 else player2
 
