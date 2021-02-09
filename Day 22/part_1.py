@@ -122,9 +122,10 @@ So, once the game ends, the winning player's score is 306.
 Play the small crab in a game of Combat using the two decks you just dealt. What is the winning player's score?
 
 """
+from typing import List, Sequence, Tuple
 
 
-def solve(player1, player2):
+def find_winner(player1: Sequence[int], player2: Sequence[int]) -> List[int]:
     while player1 and player2:
         a = player1[0]
         b = player2[0]
@@ -138,24 +139,34 @@ def solve(player1, player2):
 
     winner = player1 if player1 else player2
 
-    return sum(winner[x] * (len(winner)-x) for x in range(len(winner)))
+    return winner
+
+
+def sum_winner_score(winner: Sequence[int]) -> int:
+    return sum(winner[x] * (len(winner) - x) for x in range(len(winner)))
+
+
+def find_players_deck(data: Sequence[str]) -> Tuple[List[int], List[int]]:
+    broken = False
+    player1, player2 = [], []
+    for line in data:
+        if not line.rstrip():
+            broken = True
+        elif broken and line[0].isdigit():
+            player2.append(int(line))
+        elif line[0].isdigit():
+            player1.append(int(line))
+    return player1, player2
 
 
 def main():
-    player1 = []
-    player2 = []
-    broken = False
-
     with open('./input.txt') as f:
-        for line in f.readlines():
-            if not line.rstrip():
-                broken = True
-            elif broken and line[0].isdigit():
-                player2.append(int(line))
-            elif line[0].isdigit():
-                player1.append(int(line))
+        puzzle_input = f.readlines()
 
-    print(solve(player1, player2))  # Answer = 32495
+    player1, player2 = find_players_deck(puzzle_input)
+
+    winner = find_winner(player1, player2)
+    print(sum_winner_score(winner))  # Answer = 32495
 
 
 if __name__ == '__main__':
