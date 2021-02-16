@@ -27,6 +27,7 @@ Here are the other examples from above:
 What do you get if you add up the results of evaluating the homework problems using these new rules?
 
 """
+# TODO : Complete the program
 from part_1 import evaluate_operation, extract_bracket
 import part_1
 
