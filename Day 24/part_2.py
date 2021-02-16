@@ -48,14 +48,14 @@ from part_1 import tiles_with_black_side_up
 
 
 def hexagonal_neighbours(right: int, center: int) -> Set[Tuple[int, int]]:
-    neighs = {(right, center + 1), (right, center - 1)}
+    neighbours = {(right, center + 1), (right, center - 1)}
 
     if right % 2:
-        neighs |= {(right + 1, center - 1), (right + 1, center), (right - 1, center - 1), (right - 1, center)}
+        neighbours |= {(right + 1, center - 1), (right + 1, center), (right - 1, center - 1), (right - 1, center)}
     else:
-        neighs |= {(right + 1, center), (right + 1, center + 1), (right - 1, center + 1), (right - 1, center)}
+        neighbours |= {(right + 1, center), (right + 1, center + 1), (right - 1, center + 1), (right - 1, center)}
 
-    return neighs
+    return neighbours
 
 
 def black_tiles_after_days(tiles: Set[Tuple[int, int]], days: int) -> Set[Tuple[int, int]]:
@@ -63,8 +63,8 @@ def black_tiles_after_days(tiles: Set[Tuple[int, int]], days: int) -> Set[Tuple[
         c = Counter()
 
         for x, y in tiles:
-            for nx, ny in hexagonal_neighbours(y, x):
-                c[(ny, nx)] += 1
+            for ny, nx in hexagonal_neighbours(y, x):
+                c[(nx, ny)] += 1
 
         tiles = {
             coordinates for coordinates in c if c[coordinates] == 2 or (coordinates in tiles and c[coordinates] == 1)
