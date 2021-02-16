@@ -7,7 +7,7 @@ I upload the files after I have improved the algorithms and or naming convention
 
 **The emphasis of the code in this repository lies in verbosity (to a certain degree) and not speed.**
 Not to say speed was not necessary, but if possible, speed was traded off for understanding.
-If you are concerned about execution time, you can check out the other repository that trades off understanding for speed.
+
 
 
 And now, the introdution from the AoC challenge.
