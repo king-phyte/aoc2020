@@ -4,6 +4,12 @@ My solutions to `Advent of Code 2020`.
 I participated in and completed the challenges in the required time but some of the solutions were slow, ineffiecient or not conventional.
 I upload the files after I have improved the algorithms and or naming conventions -- Not to say I have the best solutions. Some are still very slow TBH.
 
+
+**The emphasis of the code in this repository lies in verbosity (to a certain degree) and not speed.**
+Not to say speed was not necessary, but if possible, speed was traded off for understanding.
+If you are concerned about execution time, you can check out the other repository that trades off understanding for speed.
+
+
 And now, the introdution from the AoC challenge.
 
 After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island. Surely, Christmas will go on without you.
