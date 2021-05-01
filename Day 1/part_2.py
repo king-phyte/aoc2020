@@ -12,39 +12,36 @@ Using the above example again, the three entries that sum to 2020 are 979,
 In your expense report, what is the product of the three entries
 that sum to 2020?
 """
-from typing import Sequence
-
-TARGET = 2020
-
-
-def find_target(numbers: Sequence[int]) -> int:
-
-    index_of_second_number = 0
-    index_of_third_number = 1
-
-    for number in set(numbers):
-        while index_of_second_number < len(numbers):
-            while index_of_third_number < len(numbers):
-                second_number = numbers[index_of_second_number]
-                third_number = numbers[index_of_third_number]
-
-                sum_ = number + second_number + third_number
-
-                if sum_ == TARGET:
-                    return (number * numbers[index_of_second_number]
-                            * numbers[index_of_third_number])
-
-                index_of_third_number += 1
-            index_of_second_number += 1
-            index_of_third_number = 1
-        index_of_second_number = 0
+from typing import Sequence, Tuple, Union
+from part_1 import multiply
+from functools import reduce
 
 
-def main():
+def find_target(numbers: Sequence[int], target: int) -> Union[Tuple[int, int, int], tuple]:
+    """
+    Returns 3 numbers in :param numbers such that their sum is equal to the target.
+    >>> find_target([1721, 979, 366, 299, 675,1456], 2020)
+    (675, 366, 979)
+    >>> find_target([1721, 979, 366, 299, 675,1456], 2021)
+    ()
+    """
+    numbers: Tuple[int] = tuple(set(numbers))
+    index_of_first_number = 0
+
+    for number in numbers:
+        for second_number in numbers[index_of_first_number + 1:]:
+            for third_number in numbers[index_of_first_number + 2:]:
+                _sum = number + second_number + third_number
+                if _sum == target:
+                    return number, second_number, third_number
+    return ()
+
+
+def main() -> None:
     with open("./input.txt") as f:
         numbers = [int(line.strip()) for line in f.readlines()]
 
-    print(find_target(numbers))  # Answer = 212428694
+    print(reduce(multiply, find_target(numbers, target=2020)))  # Answer = 212428694
 
 
 if __name__ == '__main__':
